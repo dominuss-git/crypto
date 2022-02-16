@@ -12,6 +12,11 @@ export type TAsset = {
   vwap24Hr: string
 }
 
+export type TAssetHistory = {
+  priceUsd: string
+  time: number
+}
+
 export type TResponse<T = any> = {
   body: {
     data: T

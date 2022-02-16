@@ -29,13 +29,13 @@ export const Table: FC = () => {
   }, [sortBy])
 
   return (
-    <div className='table__wrapper'>
+    <div className="table__wrapper">
       <table className="table">
         <thead className="table__head">
           <tr className="table__head_row">
             <th onClick={() => sort(SortFields.rank)} className="table__head_column">
               <Triangle down={sortBy.field === SortFields.rank && sortBy.down}>
-                <span className='table__hide'>Rank</span>
+                <span className="table__hide">Rank</span>
               </Triangle>
             </th>
             <th onClick={() => sort(SortFields.coin)} className="table__head_column">
@@ -54,7 +54,7 @@ export const Table: FC = () => {
               </Triangle>
             </th>
             <th className="table__head_column">
-              <span className='table__hide'>Add</span>
+              <span className="table__hide">Add</span>
             </th>
           </tr>
         </thead>
@@ -65,21 +65,23 @@ export const Table: FC = () => {
         </tbody>
       </table>
       <div className="table__pagination">
-        <span onClick={() => setPage(page - 1 < 1 ? 1 : page - 1)} className='table__page-index'>{'<'}</span>
+        <span onClick={() => setPage(page - 1 < 1 ? 1 : page - 1)} className="table__page-index">
+          {'<'}
+        </span>
         {page - 1 > 0 && (
-          <span className='table__page-index' onClick={()=> setPage(page - 1)}>
+          <span className="table__page-index" onClick={() => setPage(page - 1)}>
             {page - 1}
           </span>
         )}
-        <span className='table__page-index table__page-index_active'>
-          {page}
-        </span>
+        <span className="table__page-index table__page-index_active">{page}</span>
         {page + 1 <= assets.length / 10 && (
-          <span className='table__page-index' onClick={()=> setPage(page + 1)}>
+          <span className="table__page-index" onClick={() => setPage(page + 1)}>
             {page + 1}
           </span>
         )}
-        <span onClick={() => setPage(page + 1 > assets.length / 10 ? 10 : page + 1)} className='table__page-index'>{'>'}</span>
+        <span onClick={() => setPage(page + 1 > assets.length / 10 ? 10 : page + 1)} className="table__page-index">
+          {'>'}
+        </span>
       </div>
     </div>
   )

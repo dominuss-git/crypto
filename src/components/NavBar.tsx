@@ -17,10 +17,6 @@ export const NavBar: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {
-    console.log(top3)
-  }, [top3])
-
   return (
     <nav className="navbar">
       <div className="navbar__logo_wrapper">
