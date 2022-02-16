@@ -4,6 +4,8 @@ import { getAssets } from '../redux/actions/assetsActions'
 import { TReducers } from '../redux/reducers'
 import { TAssetProps } from '../redux/reducers/assetsReducer'
 
+import './styles.scss'
+
 export const Footer: FC = () => {
   const dispatch = useDispatch()
   const { top3 } = useSelector<TReducers, TAssetProps>(({ assets }) => assets)

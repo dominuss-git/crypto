@@ -1,4 +1,9 @@
-export const Portfolio = () => (
+import React, { FC } from 'react'
+
+import './styles.scss'
+
+
+export const Portfolio: FC = () => (
   <div className="portfolio">
     <svg fill="none" height="50" viewBox="0 0 28 26" width="50" xmlns="http://www.w3.org/2000/svg">
       <path

@@ -1,4 +1,4 @@
-import { AssetsActionsTypes } from '../actions/assetsActions'
+import { AssetsActionsTypes, SortFields } from '../actions/assetsActions'
 import { Coin, TAsset } from '../types'
 
 export type TAssetProps = { assets: TAsset[]; top3: Coin[] }
@@ -9,12 +9,13 @@ const InitialState: TAssetProps = {
 }
 
 type TAssetsAction = { type: AssetsActionsTypes; payload: TAsset[] }
+type TAssetSortAction = { type: AssetsActionsTypes; payload: { field: SortFields, down: boolean } }
 
-export const assetsReducer = (state = InitialState, action: TAssetsAction) => {
+export const assetsReducer = (state = InitialState, action: TAssetsAction | TAssetSortAction) => {
   switch (action.type) {
     case AssetsActionsTypes.GET_ASSETS:
       console.log(action.payload)
-      const top3 = action.payload.slice(0, 3)
+      const top3 = (action.payload as TAsset[]).slice(0, 3)
 
       return {
         ...state,
@@ -27,6 +28,50 @@ export const assetsReducer = (state = InitialState, action: TAssetsAction) => {
           }
         }),
       }
+
+      case AssetsActionsTypes.SORT_ASSETS: 
+        const { field, down } = action.payload as { field: SortFields, down: boolean }
+
+        console.log(field)
+
+        if (field === SortFields.price) {
+          state.assets.sort((a, b) => {
+            if (Number(a.priceUsd) >= Number(b.priceUsd)) {
+              return down ? -1 : 1;
+            } else {
+              return down ? 1 : -1;
+            }
+          })
+        }
+        if (field === SortFields.change) {
+          state.assets.sort((a, b) => {
+            if (Number(a.changePercent24Hr) >= Number(b.changePercent24Hr)) {
+              return down ? -1 : 1;
+            } else {
+              return down ? 1 : -1;
+            }
+          })
+        }
+        if (field === SortFields.rank) {
+          state.assets.sort((a, b) => {
+            if (Number(a.rank) >= Number(b.rank)) {
+              return down ? -1 : 1;
+            } else {
+              return down ? 1 : -1;
+            }
+          })
+        }
+        if (field === SortFields.coin) {
+          state.assets.sort((a, b) => {
+            if (a.symbol >= b.symbol) {
+              return down ? 1 : -1;
+            } else {
+              return down ? -1 : 1;
+            }
+          })
+        }
+        console.log(state);
+        return { ...state };
     default:
       return state
   }
