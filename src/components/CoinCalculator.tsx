@@ -30,6 +30,7 @@ export const CoinCalculator: FC<TCoinCalculatorProps> = ({ id, setVisible }) => 
   const { assets } = useSelector<TReducers, TAssetProps>(({ assets }) => assets)
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value)
     if (event.target.name === 'value') {
       setForm({ value: event.target.value, coin: (Number(event.target.value) / Number(coin?.priceUsd)).toString() })
     }
@@ -39,6 +40,8 @@ export const CoinCalculator: FC<TCoinCalculatorProps> = ({ id, setVisible }) => 
     event.preventDefault()
 
     const portfolio = localStorage.getItem(id)
+
+    console.log(form.value)
 
     if (portfolio) {
       const data = JSON.parse(portfolio)
@@ -83,6 +86,7 @@ export const CoinCalculator: FC<TCoinCalculatorProps> = ({ id, setVisible }) => 
           name="value"
           min={0}
           max={100000}
+          step="0.01"
         />
         <Input onChange={onChange} value={form.coin} type="number" name="coin" disabled />
         <Button type="submit">Submit</Button>

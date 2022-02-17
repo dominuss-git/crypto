@@ -234,8 +234,7 @@ export const PortfolioBody: FC = () => {
                   </div>
                 </td>
                 <td className="table__body_column">{coins.toFixed(2)}</td>
-                {/** TODO: fixed for float values */}
-                <td className="table__body_column table__hide_500">{contributed}$</td>
+                <td className="table__body_column table__hide_500">{contributed.toFixed(2)}$</td>
                 <td className="table__body_column table__hide_400">{cost.toFixed(2)}$</td>
                 <td className={'table__body_column' + (Number(profit) < 0 ? ' table__down' : ' table__up')}>
                   {profit.toFixed(2)}

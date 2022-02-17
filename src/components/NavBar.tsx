@@ -19,7 +19,7 @@ export const NavBar: FC = () => {
   const dispatch = useDispatch()
   const { assets, top3 } = useSelector<TReducers, TAssetProps>(({ assets }) => assets)
   const { cost, raised } = useSelector<TReducers, TPortfolioProps>(({ portfolio }) => portfolio)
-  const [isVisible, setVisible] = useState<boolean>(true)
+  const [isVisible, setVisible] = useState<boolean>(false)
 
   useUpdateAssets()
 

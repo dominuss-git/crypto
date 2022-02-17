@@ -28,7 +28,7 @@ export const Portfolio: FC<TPortfolioProps> = ({ cost, raised, ...rest }) => (
       <path d="M21.2 12.2V16.2" stroke="#fff" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="2" />
     </svg>
     <span className="portfolio__cost">
-      {cost} $
+      {cost.toFixed(2)} $
       <span className={'portfolio__raised' + (raised < 0 ? ' portfolio__down' : ' portfolio__up')}>
         {raised > 0 ? '+' + raised.toFixed(2) : raised.toFixed(2)}%
       </span>
