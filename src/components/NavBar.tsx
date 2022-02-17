@@ -48,10 +48,6 @@ export const NavBar: FC = () => {
 
     raised = (change / cost) * 100 - 100
 
-    if (change < cost) {
-      raised *= -1
-    }
-
     setRaised(raised)
     setCost(cost)
 

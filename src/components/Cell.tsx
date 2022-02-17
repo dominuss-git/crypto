@@ -13,10 +13,10 @@ export const Cell: FC<{ asset: TAsset }> = ({ asset: { rank, id, priceUsd, symbo
 
   return (
     <tr className="table__body_row">
-      <td onClick={() => navigate(`/${id}`)} className="table__body_column">
+      <td onClick={() => navigate(`/crypto/${id}`)} className="table__body_column">
         {rank}
       </td>
-      <td onClick={() => navigate(`/${id}`)} className="table__body_column">
+      <td onClick={() => navigate(`/crypto/${id}`)} className="table__body_column">
         <div className="table__body_coin">
           <img
             className="table__img"
@@ -26,11 +26,11 @@ export const Cell: FC<{ asset: TAsset }> = ({ asset: { rank, id, priceUsd, symbo
           {symbol}
         </div>
       </td>
-      <td onClick={() => navigate(`/${id}`)} className="table__body_column">
+      <td onClick={() => navigate(`/crypto/${id}`)} className="table__body_column">
         {Number(priceUsd).toFixed(2)} $
       </td>
       <td
-        onClick={() => navigate(`/${id}`)}
+        onClick={() => navigate(`/crypto/${id}`)}
         className={'table__body_column' + (Number(changePercent24Hr) < 0 ? ' table__down' : ' table__up')}
       >
         {Number(changePercent24Hr).toFixed(2)} %

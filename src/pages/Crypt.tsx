@@ -22,7 +22,7 @@ export const Crypt: FC = () => {
   const location = useLocation()
 
   useEffect(() => {
-    getHistory(dispatch, location.pathname.split('/')[1])
+    getHistory(dispatch, location.pathname.split('/')[2])
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -34,7 +34,7 @@ export const Crypt: FC = () => {
         y: Number(Number(val.priceUsd).toFixed(2)),
       }))
 
-      const id = location.pathname.split('/')[1]
+      const id = location.pathname.split('/')[2]
 
       setChartData({ id, data })
     }
@@ -61,7 +61,7 @@ export const Crypt: FC = () => {
           <CoinCalculator setVisible={setVisible} id={chartData.id} />
         </Modal>
       )}
-      <h2>{location.pathname.split('/')}</h2>
+      <h2>{location.pathname.split('/')[2]}</h2>
       <Chart
         data={[chartData]}
         onClick={() => {

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import './styles.scss'
 
 export const Logo: FC = () => (
-  <NavLink to="/" className="logo">
+  <NavLink to="/crypto/" className="logo">
     <svg version="1.1" width="60" height="60" viewBox="0 0 256 256">
       <desc>Created with Fabric.js 1.7.22</desc>
       <defs></defs>

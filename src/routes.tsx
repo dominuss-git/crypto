@@ -10,7 +10,7 @@ export const Routes: FC = () => {
     <BrowserRouter>
       <ReactRoutes>
         <Route
-          path="/"
+          path="/crypto/"
           element={
             <PublicLayout>
               <Dashboard />
@@ -18,7 +18,7 @@ export const Routes: FC = () => {
           }
         />
         <Route
-          path="/:id"
+          path="/crypto/:id"
           element={
             <PublicLayout>
               <Crypt />
