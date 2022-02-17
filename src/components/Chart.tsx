@@ -1,7 +1,9 @@
 import React, { FC } from 'react'
 import { ResponsiveLine } from '@nivo/line'
 
-type TChart = {
+import './styles.scss'
+
+export type TChart = {
   id: string
   data: Array<{
     x: string | number
@@ -9,11 +11,14 @@ type TChart = {
   }>
 }
 
-export const Chart: FC<{ data: TChart[] }> = ({ data }) => (
+type TChartProps = { data: TChart[]; onClick?: () => void }
+
+export const Chart: FC<TChartProps> = ({ data, ...rest }) => (
   <div className="chart__wrapper">
     <ResponsiveLine
+      {...rest}
       data={data}
-      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+      margin={{ top: 50, right: 60, bottom: 50, left: 60 }}
       xScale={{ type: 'point' }}
       yScale={{
         type: 'linear',
@@ -45,32 +50,7 @@ export const Chart: FC<{ data: TChart[] }> = ({ data }) => (
       pointLabelYOffset={-12}
       enableArea={true}
       useMesh={true}
-      legends={[
-        {
-          anchor: 'bottom-right',
-          direction: 'column',
-          justify: false,
-          translateX: 100,
-          translateY: 0,
-          itemsSpacing: 0,
-          itemDirection: 'left-to-right',
-          itemWidth: 80,
-          itemHeight: 20,
-          itemOpacity: 0.75,
-          symbolSize: 12,
-          symbolShape: 'circle',
-          symbolBorderColor: 'rgba(0, 0, 0, .5)',
-          effects: [
-            {
-              on: 'hover',
-              style: {
-                itemBackground: 'rgba(0, 0, 0, .03)',
-                itemOpacity: 1,
-              },
-            },
-          ],
-        },
-      ]}
+      legends={[]}
     />
   </div>
 )

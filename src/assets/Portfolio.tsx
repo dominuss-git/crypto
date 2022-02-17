@@ -2,7 +2,12 @@ import React, { FC } from 'react'
 
 import './styles.scss'
 
-export const Portfolio: FC = () => (
+type TPortfolioProps = {
+  cost: number
+  raised: number
+}
+
+export const Portfolio: FC<TPortfolioProps> = ({ cost, raised }) => (
   <div className="portfolio">
     <svg fill="none" height="50" viewBox="0 0 28 26" width="50" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -21,5 +26,11 @@ export const Portfolio: FC = () => (
       <path d="M6.79999 12.2V16.2" stroke="#fff" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="2" />
       <path d="M21.2 12.2V16.2" stroke="#fff" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="2" />
     </svg>
+    <span className="portfolio__cost">
+      {cost} $
+      <span className={'portfolio__raised' + (raised < 0 ? ' portfolio__down' : ' portfolio__up')}>
+        {raised > 0 ? '+' + raised.toFixed(2) : raised.toFixed(2)}%
+      </span>
+    </span>
   </div>
 )

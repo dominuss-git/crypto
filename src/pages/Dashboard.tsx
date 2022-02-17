@@ -14,11 +14,6 @@ export const Dashboard: FC = () => {
   const dispatch = useDispatch()
   const { assets, history } = useSelector<TReducers, TAssetProps>(({ assets }) => assets)
 
-  // useEffect(() => {
-  //   getAssets(dispatch);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
-
   // const func = () => {
   //   showSnack(dispatch, 'hi', 'hi')
   // }

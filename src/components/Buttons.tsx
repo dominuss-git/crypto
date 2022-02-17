@@ -1,11 +1,11 @@
-import React, { FC } from 'react'
+import React, { ButtonHTMLAttributes, FC } from 'react'
 import './styles.scss'
 
 export type TButtonProps = {
   onClick?: () => void
 }
 
-export const Button: FC<TButtonProps> = ({ children, ...rest }) => {
+export const Button: FC<TButtonProps & ButtonHTMLAttributes<any>> = ({ children, ...rest }) => {
   return (
     <button className="button" {...rest}>
       {children}

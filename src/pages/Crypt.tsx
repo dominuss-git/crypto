@@ -9,12 +9,15 @@ import { Spinner } from '../components/Spinner'
 
 import '../styles/pages.scss'
 import { TAssetHistory } from '../redux/types'
-import { Chart } from '../components/Chart'
+import { Chart, TChart } from '../components/Chart'
+import { Modal } from '../components/Modal'
+import { CoinCalculator } from '../components/CoinCalculator'
 
 export const Crypt: FC = () => {
   const { history } = useSelector<TReducers, TAssetProps>(({ assets }) => assets)
   const dispatch = useDispatch()
-  const [data, setData] = useState<any>(null)
+  const [chartData, setChartData] = useState<TChart | null>(null)
+  const [isVisible, setVisible] = useState<boolean>(false)
 
   const location = useLocation()
 
@@ -33,12 +36,12 @@ export const Crypt: FC = () => {
 
       const id = location.pathname.split('/')[1]
 
-      setData({ id, data })
+      setChartData({ id, data })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history])
 
-  if (!data) {
+  if (!chartData) {
     return (
       <div className="content">
         <Spinner />
@@ -48,8 +51,23 @@ export const Crypt: FC = () => {
 
   return (
     <div className="content">
+      {isVisible && (
+        <Modal
+          title="Add coin"
+          onClose={() => {
+            setVisible(false)
+          }}
+        >
+          <CoinCalculator setVisible={setVisible} id={chartData.id} />
+        </Modal>
+      )}
       <h2>{location.pathname.split('/')}</h2>
-      <Chart data={[data]} />
+      <Chart
+        data={[chartData]}
+        onClick={() => {
+          setVisible(true)
+        }}
+      />
     </div>
   )
 }

@@ -1,12 +1,15 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { TAsset } from '../redux/types'
 import { AddButton } from './Buttons'
+import { CoinCalculator } from './CoinCalculator'
+import { Modal } from './Modal'
 
 import './styles.scss'
 
 export const Cell: FC<{ asset: TAsset }> = ({ asset: { rank, id, priceUsd, symbol, changePercent24Hr } }) => {
   const navigate = useNavigate()
+  const [isVisible, setVisible] = useState<boolean>(false)
 
   return (
     <tr className="table__body_row">
@@ -33,7 +36,17 @@ export const Cell: FC<{ asset: TAsset }> = ({ asset: { rank, id, priceUsd, symbo
         {Number(changePercent24Hr).toFixed(2)} %
       </td>
       <td className="table__body_column">
-        <AddButton onClick={console.log} />
+        <AddButton onClick={() => setVisible(true)} />
+        {isVisible && (
+          <Modal
+            title="Add coin"
+            onClose={() => {
+              setVisible(false)
+            }}
+          >
+            <CoinCalculator setVisible={setVisible} id={id} />
+          </Modal>
+        )}
       </td>
     </tr>
   )

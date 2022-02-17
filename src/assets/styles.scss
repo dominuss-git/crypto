@@ -1,3 +1,8 @@
+$contrast: #fff;
+$primary-light: #1C916B;
+$error-main: #C8102E;
+$secondary-main: #B58500;
+
 .logo {
   display: inline-block;
   margin: 10px;
@@ -9,16 +14,33 @@
 
 .portfolio {
   display: inline-block;
-  // position: absolute;
-  margin: 10px 60px 10px 0;
-  // right: 0;
+  position: relative;
+  margin: 10px 20px 10px 0;
+
+  &__cost {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    right: -20px;
+    font-size: 12px;
+    bottom: -10px;
+    position: absolute;
+    background-color: $secondary-main;
+    white-space: nowrap;
+    color: $contrast;
+    padding: 5px;
+  }
+
+  &__down {
+    color: $error-main;
+  }
+
+  &__up {
+    color: $primary-light
+  }
 
   :hover {
     cursor: pointer;
-  }
-
-  @media (max-width: 400px) {
-    margin: 10px;
   }
 }
 

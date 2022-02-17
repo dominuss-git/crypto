@@ -163,6 +163,7 @@ $contrast: #fff;
   justify-content: center;
   color: $contrast;
   text-align: center;
+  z-index: 10;
   // border-radius: ${({ theme }) => theme.spacing.radius}px;
   padding: 10px 40px;
     // ${({ theme }) => theme.spacing.standard * 2}px;
@@ -303,6 +304,9 @@ $contrast: #fff;
   }
 
   @media (max-width: 500px) {
+    &__wrapper {
+      width: 100%;
+    }
     // width: 100%;
     flex-grow: 1;
     &__hide {
@@ -310,6 +314,68 @@ $contrast: #fff;
     }
   }
 }
+
+.coin-calculator {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: center;
+}
+
+.cross {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  color: $contrast;
+}
+
+.input {
+  width: 300px;
+  background-color: $primary-light;
+  border: none;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  color: $contrast;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__title {
+    color: $contrast;
+  }
+
+  :focus {
+    border: 1px solid #000000;
+    outline: none;
+  }
+
+  :hover {
+    border: 1px solid #000000;
+    outline: none;
+  }
+
+  :active {
+    border: 1px solid #000000;
+    outline: none;
+  }
+} 
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
 .chart {
   &__wrapper {

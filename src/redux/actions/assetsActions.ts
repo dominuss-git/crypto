@@ -17,15 +17,11 @@ export enum SortFields {
 }
 
 export const getAssets = async (dispatch: Dispatch<{ type: AssetsActionsTypes; payload: TAsset[] }>) => {
-  // dispatch({ type: SET_LOADER, payload: null });
-
   await request<TAsset[]>(`https://api.coincap.io/v2/assets`, 'GET').then((assets) => {
     if (assets.status === 200) {
       dispatch({ type: AssetsActionsTypes.GET_ASSETS, payload: assets.body.data })
     }
-    // dispatch({ type: SHOW_TOAST, payload: products.body.message })
   })
-  // dispatch({ type: UNSET_LOADER, payload: null });
 }
 
 export const sortAssets = (
