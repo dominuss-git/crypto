@@ -47,7 +47,7 @@ export const Cell: FC<{ asset: TAsset }> = ({ asset: { rank, id, vwap24Hr, price
         onClick={() => navigate(`/crypto/${id}`)}
         className={'table__body_column' + (Number(changePercent24Hr) < 0 ? ' table__down' : ' table__up')}
       >
-        {Number(changePercent24Hr).toFixed(2)} %
+        {Number(changePercent24Hr) > 0 ? `+${Number(changePercent24Hr).toFixed(2)}` : Number(changePercent24Hr).toFixed(2)} %
       </td>
       <td className="table__body_column">
         <AddButton onClick={() => setVisible(true)} />

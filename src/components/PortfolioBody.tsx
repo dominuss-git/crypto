@@ -237,7 +237,7 @@ export const PortfolioBody: FC = () => {
                 <td className="table__body_column table__hide_500">{contributed.toFixed(2)}$</td>
                 <td className="table__body_column table__hide_400">{cost.toFixed(2)}$</td>
                 <td className={'table__body_column' + (Number(profit) < 0 ? ' table__down' : ' table__up')}>
-                  {profit.toFixed(2)}
+                  {profit > 0 ? `+${profit.toFixed(2)}` : profit.toFixed(2)}
                 </td>
                 <td>
                   <Trash onClick={() => {

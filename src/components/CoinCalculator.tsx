@@ -41,8 +41,6 @@ export const CoinCalculator: FC<TCoinCalculatorProps> = ({ id, setVisible }) => 
 
     const portfolio = localStorage.getItem(id)
 
-    console.log(form.value)
-
     if (portfolio) {
       const data = JSON.parse(portfolio)
       data.push({ valueUSD: form.value, valueCoins: form.coin, price: coin?.priceUsd })
@@ -51,20 +49,21 @@ export const CoinCalculator: FC<TCoinCalculatorProps> = ({ id, setVisible }) => 
       localStorage.setItem(id, JSON.stringify([{ valueUSD: form.value, valueCoins: form.coin, price: coin?.priceUsd }]))
     }
 
-    setPortfolio(dispatch, assets);
+    setPortfolio(dispatch, assets)
     showSnack(dispatch, 'Added', `${id} to your portfolio`)
     setVisible(false)
   }
 
   const getCoin = () => {
-    request<TAsset>(`https://api.coincap.io/v2/assets/${id}`, 'GET').then((asset) => {
-      if (asset.status === 200) {
-        setCoin(asset.body.data)
-      }
-    })
-    .catch(e => {
-      showSnack(dispatch, 'Error', <Button onClick={getCoin}>Reload</Button>)
-    })
+    request<TAsset>(`https://api.coincap.io/v2/assets/${id}`, 'GET')
+      .then((asset) => {
+        if (asset.status === 200) {
+          setCoin(asset.body.data)
+        }
+      })
+      .catch((e) => {
+        showSnack(dispatch, 'Error', <Button onClick={getCoin}>Reload</Button>)
+      })
   }
 
   useEffect(() => {
