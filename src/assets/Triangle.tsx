@@ -1,6 +1,8 @@
 import React, { FC } from 'react'
 
-export const Triangle: FC<{ down: boolean }> = ({ children, down }) => (
+import './styles.scss'
+
+export const Triangle: FC<{ down?: boolean }> = ({ children, down }) => (
   <div className="triangle">
     <span className="triangle__title">{children}</span>
     <svg className={down ? 'triangle__down' : ''} width="11" height="11">

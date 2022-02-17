@@ -1,4 +1,5 @@
 import { Dispatch } from 'react'
+
 import { request } from '../request'
 import { TAsset, TAssetHistory } from '../types'
 
@@ -14,6 +15,7 @@ export enum SortFields {
   coin,
   price,
   change,
+  vwap,
 }
 
 export const getAssets = async (dispatch: Dispatch<{ type: AssetsActionsTypes; payload: TAsset[] }>) => {

@@ -5,10 +5,11 @@ import './styles.scss'
 type TPortfolioProps = {
   cost: number
   raised: number
+  onClick: () => void
 }
 
-export const Portfolio: FC<TPortfolioProps> = ({ cost, raised }) => (
-  <div className="portfolio">
+export const Portfolio: FC<TPortfolioProps> = ({ cost, raised, ...rest }) => (
+  <div {...rest} className="portfolio">
     <svg fill="none" height="50" viewBox="0 0 28 26" width="50" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M23.3 25H4.70001C2.80001 25 1.20001 23.4 1.20001 21.5V9.29999C1.20001 7.39999 2.80001 5.79999 4.70001 5.79999H23.3C25.2 5.79999 26.8 7.39999 26.8 9.29999V21.5C26.8 23.4 25.2 25 23.3 25Z"

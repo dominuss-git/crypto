@@ -30,3 +30,9 @@ export type Coin = {
   rank: string
   price: string
 }
+
+export type TPortfolio = {
+  valueUSD: number
+  valueCoins: number
+  price: number
+}

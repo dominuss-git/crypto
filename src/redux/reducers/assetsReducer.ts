@@ -19,7 +19,6 @@ export const assetsReducer = (
 ) => {
   switch (action.type) {
     case AssetsActionsTypes.GET_ASSETS:
-      console.log(action.payload)
       const top3 = (action.payload as TAsset[]).slice(0, 3)
 
       return {
@@ -37,8 +36,6 @@ export const assetsReducer = (
       return { ...state, history: action.payload }
     case AssetsActionsTypes.SORT_ASSETS:
       const { field, down } = action.payload as { field: SortFields; down: boolean }
-
-      console.log(field)
 
       if (field === SortFields.price) {
         state.assets.sort((a, b) => {
@@ -76,7 +73,15 @@ export const assetsReducer = (
           }
         })
       }
-      console.log(state)
+      if (field === SortFields.vwap) {
+        state.assets.sort((a, b) => {
+          if (a.vwap24Hr >= b.vwap24Hr) {
+            return down ? 1 : -1
+          } else {
+            return down ? -1 : 1
+          }
+        })
+      }
       return { ...state }
     default:
       return state

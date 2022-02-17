@@ -1,11 +1,11 @@
 import React, { Dispatch, FC, ReactNode } from 'react'
-
-import './styles.scss'
-
 import { useSelector } from 'react-redux'
+
 import { hideSnack, showSnack as show } from '../redux/actions/snackActions'
 import { TReducers } from '../redux/reducers'
 import { TSnack } from '../redux/reducers/snackReducer'
+
+import './styles.scss'
 
 export const showSnack = (dispatch: Dispatch<any>, title: string, content: ReactNode) => {
   show(dispatch, { title, content, visible: true })

@@ -3,8 +3,10 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { applyMiddleware, compose, createStore } from 'redux'
 import thunk from 'redux-thunk'
+
 import { App } from './App'
 import { rootReducer } from './redux/reducers'
+
 import './styles/app.scss'
 
 const store = createStore(

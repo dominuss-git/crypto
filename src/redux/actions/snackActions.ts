@@ -1,4 +1,5 @@
 import { Dispatch } from 'react'
+
 import { TSnack } from '../reducers/snackReducer'
 
 export enum SnackActionsTypes {

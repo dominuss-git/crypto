@@ -1,5 +1,8 @@
 import React, { FC } from 'react'
+
 import { Coin } from '../redux/types'
+
+import './styles.scss'
 
 type TStatisticProps = {
   top3: Coin[]

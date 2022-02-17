@@ -1,22 +1,15 @@
-import React, { FC, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Triangle } from '../assets/Triangle'
-import { Button } from '../components/Buttons'
-import { showSnack, SnackBar } from '../components/SnackBar'
+import React, { FC } from 'react'
+import { useSelector } from 'react-redux'
+
 import { Spinner } from '../components/Spinner'
 import { Table } from '../components/Table'
-import { getHistory } from '../redux/actions/assetsActions'
 import { TReducers } from '../redux/reducers'
 import { TAssetProps } from '../redux/reducers/assetsReducer'
+
 import '../styles/pages.scss'
 
 export const Dashboard: FC = () => {
-  const dispatch = useDispatch()
-  const { assets, history } = useSelector<TReducers, TAssetProps>(({ assets }) => assets)
-
-  // const func = () => {
-  //   showSnack(dispatch, 'hi', 'hi')
-  // }
+  const { assets } = useSelector<TReducers, TAssetProps>(({ assets }) => assets)
 
   if (assets.length === 0) {
     return (
@@ -28,14 +21,7 @@ export const Dashboard: FC = () => {
 
   return (
     <div className="content">
-      {/* <Spinner /> */}
-      {/* <Button onClick={func}>click me</Button> */}
-
-      {/* <SnackBar /> */}
       <Table />
-      {/* <Modal title="ghbdtn">
-        <Spinner />
-      </Modal> */}
     </div>
   )
 }

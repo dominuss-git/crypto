@@ -1,67 +1,46 @@
-import React, { FC, useEffect } from 'react'
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { FC, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
+
 import { Logo } from '../assets/Logo'
 import { Portfolio } from '../assets/Portfolio'
 import { useUpdateAssets } from '../hooks/useUpdateAssets'
+import { setPortfolio } from '../redux/actions/portfolioActions'
 import { TReducers } from '../redux/reducers'
 import { TAssetProps } from '../redux/reducers/assetsReducer'
+import { TPortfolioProps } from '../redux/reducers/portfolioReducer'
+import { Modal } from './Modal'
+import { PortfolioBody } from './PortfolioBody'
 import { Statistic } from './Statistic'
+
 import './styles.scss'
 
-type TPortfolio = {
-  valueUSD: string
-  valueCoins: string
-  price: string
-}
-
 export const NavBar: FC = () => {
+  const dispatch = useDispatch()
   const { assets, top3 } = useSelector<TReducers, TAssetProps>(({ assets }) => assets)
-  const [raised, setRaised] = useState<number>(0)
-  const [cost, setCost] = useState<number>(0)
+  const { cost, raised } = useSelector<TReducers, TPortfolioProps>(({ portfolio }) => portfolio)
+  const [isVisible, setVisible] = useState<boolean>(true)
 
   useUpdateAssets()
 
   useEffect(() => {
-    let cost = 0
-    let change = 0
-    let raised
-
-    for (let i = 0; true; i++) {
-      const key = localStorage.key(i)
-
-      if (!key) {
-        break
-      }
-
-      const portfolio = JSON.parse(localStorage.getItem(key) as string)
-      const coin = assets.find((val) => val.id === key)
-
-      // eslint-disable-next-line no-loop-func
-      portfolio.forEach((val: TPortfolio) => {
-        cost += Number(val.valueUSD)
-        if (coin) {
-          change += Number(val.valueCoins) * Number(coin.priceUsd)
-        }
-      })
-    }
-
-    raised = (change / cost) * 100 - 100
-
-    setRaised(raised)
-    setCost(cost)
-
-    console.log(cost, change, raised)
-  }, [assets])
+    setPortfolio(dispatch, assets)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <nav className="navbar">
-      <div className="navbar__logo_wrapper">
+      <NavLink to="/crypto/" className="navbar__logo-wrapper">
         <Logo />
         <h1 className="navbar__title">Crypto App</h1>
-      </div>
+      </NavLink>
       <Statistic top3={top3} />
-      <Portfolio raised={raised} cost={cost} />
+      <Portfolio onClick={() => setVisible(true)} raised={raised} cost={cost} />
+      {isVisible && (
+        <Modal title="Porfolio" onClose={() => setVisible(false)}>
+          <PortfolioBody />
+        </Modal>
+      )}
     </nav>
   )
 }

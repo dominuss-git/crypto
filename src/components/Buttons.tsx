@@ -1,4 +1,5 @@
 import React, { ButtonHTMLAttributes, FC } from 'react'
+
 import './styles.scss'
 
 export type TButtonProps = {

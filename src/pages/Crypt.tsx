@@ -1,17 +1,18 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
+
 import { getHistory } from '../redux/actions/assetsActions'
 import { TReducers } from '../redux/reducers'
 import { TAssetProps } from '../redux/reducers/assetsReducer'
-import '../styles/pages.scss'
-import { Spinner } from '../components/Spinner'
-
-import '../styles/pages.scss'
 import { TAssetHistory } from '../redux/types'
 import { Chart, TChart } from '../components/Chart'
 import { Modal } from '../components/Modal'
+import { Spinner } from '../components/Spinner'
 import { CoinCalculator } from '../components/CoinCalculator'
+
+import '../styles/pages.scss'
+import { SnackBar } from '../components/SnackBar'
 
 export const Crypt: FC = () => {
   const { history } = useSelector<TReducers, TAssetProps>(({ assets }) => assets)
@@ -27,7 +28,6 @@ export const Crypt: FC = () => {
   }, [])
 
   useEffect(() => {
-    console.log(history)
     if (history) {
       const data = (history as TAssetHistory[]).map((val) => ({
         x: new Date(val.time).toLocaleDateString(),
@@ -59,6 +59,7 @@ export const Crypt: FC = () => {
           }}
         >
           <CoinCalculator setVisible={setVisible} id={chartData.id} />
+          <SnackBar />
         </Modal>
       )}
       <h2>{location.pathname.split('/')[2]}</h2>
