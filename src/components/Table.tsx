@@ -6,6 +6,8 @@ import { sortAssets, SortFields } from '../redux/actions/assetsActions'
 import { TReducers } from '../redux/reducers'
 import { TAssetProps } from '../redux/reducers/assetsReducer'
 import { Cell } from './Cell'
+import { CoinCalculator } from './CoinCalculator'
+import { Modal } from './Modal'
 
 import './styles.scss'
 
@@ -14,6 +16,7 @@ export const Table: FC = () => {
   const [sortBy, setSort] = useState<{ field: SortFields; down: boolean }>({ field: SortFields.rank, down: false })
   const dispatch = useDispatch()
   const [page, setPage] = useState(1)
+  const [isVisible, setVisible] = useState<string | null>(null)
 
   const sort = (field: SortFields) => {
     if (field === sortBy.field) {
@@ -69,7 +72,20 @@ export const Table: FC = () => {
         </thead>
         <tbody>
           {assets.slice(0 + 15 * (page - 1), 15 * page).map((val) => (
-            <Cell key={val.symbol} asset={val} />
+            <>
+              <Cell key={val.symbol} asset={val} setVisible={setVisible} />
+              {isVisible === val.id && (
+                <Modal
+                  key={val.symbol}
+                  title="Add coin"
+                  onClose={() => {
+                    setVisible(null)
+                  }}
+                >
+                  <CoinCalculator setVisible={setVisible} id={val.id} />
+                </Modal>
+              )}
+            </>
           ))}
         </tbody>
       </table>

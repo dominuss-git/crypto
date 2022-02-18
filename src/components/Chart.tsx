@@ -18,7 +18,7 @@ export const Chart: FC<TChartProps> = ({ data, ...rest }) => (
     <ResponsiveLine
       {...rest}
       data={data}
-      margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+      margin={{ top: 50, right: 0, bottom: 50, left: 60 }}
       xScale={{ type: 'point' }}
       yScale={{
         type: 'linear',
@@ -41,15 +41,17 @@ export const Chart: FC<TChartProps> = ({ data, ...rest }) => (
         legendPosition: 'middle',
       }}
       enableGridX={false}
+      colors={['#B58500', '#B58500']}
       enableGridY={false}
       lineWidth={1}
-      pointSize={2}
+      pointSize={1}
       pointColor={{ theme: 'background' }}
       pointBorderWidth={1}
       pointBorderColor={{ from: 'serieColor' }}
       pointLabelYOffset={-12}
+      enableSlices="x"
+      // useMesh={true}
       enableArea={true}
-      useMesh={true}
       legends={[]}
     />
   </div>

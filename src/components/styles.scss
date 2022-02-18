@@ -98,6 +98,21 @@ $contrast: #fff;
   :hover {
     cursor: pointer;
   }
+
+  &__light {
+    display: inline-block;
+    background-color: $primary-light;
+    border: none;
+    color: $contrast;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+  }
+
+  &__light:hover {
+    cursor: pointer;
+  }
 }
 
 .add-button {
@@ -368,6 +383,18 @@ $contrast: #fff;
   flex-direction: column;
   // justify-content: center;
   align-items: center;
+
+  &__button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: $contrast
+  }
+
+  &__toggle {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .cross {
@@ -427,8 +454,14 @@ input::-webkit-inner-spin-button {
 
 .chart {
   &__wrapper {
+    position: absolute;
+    bottom: 0;
     width: 100%;
     height: 400px;
+    
+    @media (max-width: 780px) {
+      height: 300px;
+    }
   }
 }
 
@@ -488,5 +521,39 @@ input::-webkit-inner-spin-button {
     -webkit-transform: translateX(12px);
     -ms-transform: translateX(12px);
     transform: translateX(12px);
+  }
+}
+
+.coin-info {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  justify-content: space-around;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 0 0 0 100px;
+  border: 2px solid $primary-main;
+  color: $primary-main;
+
+  &__logo {
+    display: inline-flex;
+    margin: 0 30px 0 0;
+  }
+
+  &__img {
+    height: 50px;
+  }
+
+  @media (max-width: 940px) {
+    height: auto;
+    flex-direction: column;
+
+    &__logo {
+      margin: 0;
+    }
+  }
+
+  @media (max-width: 780px) {
+    margin: 0
   }
 }

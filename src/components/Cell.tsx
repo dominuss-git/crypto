@@ -8,9 +8,8 @@ import { Modal } from './Modal'
 
 import './styles.scss'
 
-export const Cell: FC<{ asset: TAsset }> = ({ asset: { rank, id, vwap24Hr, priceUsd, symbol, changePercent24Hr } }) => {
+export const Cell: FC<{ asset: TAsset, setVisible: (state: string | null) => void }> = ({ setVisible, asset: { rank, id, vwap24Hr, priceUsd, symbol, changePercent24Hr } }) => {
   const navigate = useNavigate()
-  const [isVisible, setVisible] = useState<boolean>(false)
   const portfolio = localStorage.getItem(id)
   let data = 0
 
@@ -50,17 +49,7 @@ export const Cell: FC<{ asset: TAsset }> = ({ asset: { rank, id, vwap24Hr, price
         {Number(changePercent24Hr) > 0 ? `+${Number(changePercent24Hr).toFixed(2)}` : Number(changePercent24Hr).toFixed(2)} %
       </td>
       <td className="table__body_column">
-        <AddButton onClick={() => setVisible(true)} />
-        {isVisible && (
-          <Modal
-            title="Add coin"
-            onClose={() => {
-              setVisible(false)
-            }}
-          >
-            <CoinCalculator setVisible={setVisible} id={id} />
-          </Modal>
-        )}
+        <AddButton onClick={() => setVisible(id)} />
       </td>
       <td onClick={() => navigate(`/crypto/${id}`)} className="table__body_column table__hide_600">
         <span>{data.toFixed(2)}</span> $

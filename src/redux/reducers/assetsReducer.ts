@@ -1,12 +1,13 @@
 import { AssetsActionsTypes, SortFields } from '../actions/assetsActions'
 import { Coin, TAsset, TAssetHistory } from '../types'
 
-export type TAssetProps = { assets: TAsset[]; top3: Coin[]; history: TAssetHistory[] | null }
+export type TAssetProps = { assets: TAsset[]; top3: Coin[]; history: TAssetHistory[] | null; current: TAsset | null }
 
 const InitialState: TAssetProps = {
   assets: [],
   history: null,
   top3: [],
+  current: null,
 }
 
 type TAssetsAction = { type: AssetsActionsTypes; payload: TAsset[] }
@@ -32,6 +33,10 @@ export const assetsReducer = (
           }
         }),
       }
+    case AssetsActionsTypes.GET_ASSET:
+      return { ...state, current: action.payload }
+    case AssetsActionsTypes.UNSET_ASSET:
+      return { ...state, current: null }
     case AssetsActionsTypes.GET_HISTORY:
       return { ...state, history: action.payload }
     case AssetsActionsTypes.SORT_ASSETS:
@@ -75,7 +80,7 @@ export const assetsReducer = (
       }
       if (field === SortFields.vwap) {
         state.assets.sort((a, b) => {
-          if (a.vwap24Hr >= b.vwap24Hr) {
+          if (Number(a.vwap24Hr) >= Number(b.vwap24Hr)) {
             return down ? 1 : -1
           } else {
             return down ? -1 : 1

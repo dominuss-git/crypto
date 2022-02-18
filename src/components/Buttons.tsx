@@ -4,11 +4,14 @@ import './styles.scss'
 
 export type TButtonProps = {
   onClick?: () => void
+  light?: boolean
 }
 
-export const Button: FC<TButtonProps & ButtonHTMLAttributes<any>> = ({ children, ...rest }) => {
+export const Button: FC<TButtonProps & ButtonHTMLAttributes<any>> = (
+  { children, light, ...rest } = { light: false }
+) => {
   return (
-    <button className="button" {...rest}>
+    <button className={light ? 'button__light' : 'button'} {...rest}>
       {children}
     </button>
   )

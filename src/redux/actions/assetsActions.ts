@@ -6,6 +6,7 @@ import { TAsset, TAssetHistory } from '../types'
 export enum AssetsActionsTypes {
   GET_ASSETS = 'GET_ASSETS',
   GET_ASSET = 'GET_ASSET',
+  UNSET_ASSET = 'UNSET_ASSET',
   SORT_ASSETS = 'SORT_ASSETS',
   GET_HISTORY = 'GET_HISTORY',
 }
@@ -22,6 +23,18 @@ export const getAssets = async (dispatch: Dispatch<{ type: AssetsActionsTypes; p
   await request<TAsset[]>(`https://api.coincap.io/v2/assets`, 'GET').then((assets) => {
     if (assets.status === 200) {
       dispatch({ type: AssetsActionsTypes.GET_ASSETS, payload: assets.body.data })
+    }
+  })
+}
+
+export const unsetAsset = (dispatch: Dispatch<{ type: AssetsActionsTypes }>) => {
+  dispatch({ type: AssetsActionsTypes.GET_ASSET })
+}
+
+export const getAsset = async (dispatch: Dispatch<{ type: AssetsActionsTypes; payload: TAsset }>, id: string) => {
+  await request<TAsset>(`https://api.coincap.io/v2/assets/${id}`, 'GET').then((asset) => {
+    if (asset.status === 200) {
+      dispatch({ type: AssetsActionsTypes.GET_ASSET, payload: asset.body.data })
     }
   })
 }

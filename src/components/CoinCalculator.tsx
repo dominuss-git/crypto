@@ -1,22 +1,21 @@
 import React, { FC, FormEventHandler, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { getAsset, unsetAsset } from '../redux/actions/assetsActions'
 
 import { setPortfolio } from '../redux/actions/portfolioActions'
 import { TReducers } from '../redux/reducers'
 import { TAssetProps } from '../redux/reducers/assetsReducer'
-import { request } from '../redux/request'
-import { TAsset } from '../redux/types'
 import { Button } from './Buttons'
 import { Input } from './Input'
 import { showSnack } from './SnackBar'
 import { Spinner } from './Spinner'
+import { Toggle } from './Toggle'
 
 import './styles.scss'
-import { Toggle } from './Toggle'
 
 type TCoinCalculatorProps = {
   id: string
-  setVisible: (state: boolean) => void
+  setVisible?: (state: string | null) => void
 }
 
 export type TForm = {
@@ -27,9 +26,9 @@ export type TForm = {
 
 export const CoinCalculator: FC<TCoinCalculatorProps> = ({ id, setVisible }) => {
   const dispatch = useDispatch()
-  const [coin, setCoin] = useState<TAsset | null>(null)
+  // const [coin, setCoin] = useState<TAsset | null>(null)
   const [form, setForm] = useState<TForm>({ coin: '0', value: '', valute: false })
-  const { assets } = useSelector<TReducers, TAssetProps>(({ assets }) => assets)
+  const { assets, current: coin } = useSelector<TReducers, TAssetProps>(({ assets }) => assets)
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!form.valute) {
@@ -90,23 +89,32 @@ export const CoinCalculator: FC<TCoinCalculatorProps> = ({ id, setVisible }) => 
 
     setPortfolio(dispatch, assets)
     showSnack(dispatch, 'Added', `${id} to your portfolio`)
-    setVisible(false)
+    if (setVisible) {
+      setVisible(null)
+    }
   }
 
-  const getCoin = () => {
-    request<TAsset>(`https://api.coincap.io/v2/assets/${id}`, 'GET')
-      .then((asset) => {
-        if (asset.status === 200) {
-          setCoin(asset.body.data)
-        }
-      })
-      .catch((e) => {
-        showSnack(dispatch, 'Error', <Button onClick={getCoin}>Reload</Button>)
-      })
-  }
+  // const getCoin = () => {
+  // request<TAsset>(`https://api.coincap.io/v2/assets/${id}`, 'GET')
+  // .then((asset) => {
+  // if (asset.status === 200) {
+  // setCoin(asset.body.data)
+  // if (set) {
+  // set(asset.body.data)
+  // }
+  // }
+  // })
+  // .catch((e) => {
+  // showSnack(dispatch, 'Error', <Button onClick={getCoin}>Reload</Button>)
+  // })
+  // }
 
   useEffect(() => {
-    getCoin()
+    if (!coin) {
+      getAsset(dispatch, id)
+
+      return () => unsetAsset(dispatch)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -134,11 +142,11 @@ export const CoinCalculator: FC<TCoinCalculatorProps> = ({ id, setVisible }) => 
           name="coin"
           disabled
         />
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#fff' }}>
-          <Button style={{ backgroundColor: '#1C916B' }} type="submit">
+        <div className="coin-calculator__button-wrapper">
+          <Button type="submit" light>
             Submit
           </Button>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div className="coin-calculator__toggle">
             USD <Toggle onClick={onToggleClick} /> {coin.symbol}
           </div>
         </div>

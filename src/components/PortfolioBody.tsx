@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Trash } from '../assets/Trash'
 
 import { Triangle } from '../assets/Triangle'
+import { Trash } from '../assets/Trash'
 import { TReducers } from '../redux/reducers'
 import { TAssetProps } from '../redux/reducers/assetsReducer'
 import { setPortfolio } from '../redux/actions/portfolioActions'
@@ -240,7 +240,7 @@ export const PortfolioBody: FC = () => {
                 <td className="table__body_column table__hide_500">{contributed.toFixed(2)}$</td>
                 <td className="table__body_column table__hide_400">{cost.toFixed(2)}$</td>
                 <td className={'table__body_column' + (Number(profit) < 0 ? ' table__down' : ' table__up')}>
-                  {profit > 0 ? `+${profit.toFixed(2)}` : profit.toFixed(2)}
+                  {profit > 0 ? `+${profit.toFixed(2)}` : profit.toFixed(2)} %
                 </td>
                 <td>
                   <Trash
