@@ -37,7 +37,7 @@ export const PortfolioBody: FC = () => {
   useEffect(() => {
     const { field, down } = sortBy
 
-    if (!portfolio) return;
+    if (!portfolio) return
 
     if (field === SortFields.name) {
       portfolio.sort((a, b) => {
@@ -172,27 +172,30 @@ export const PortfolioBody: FC = () => {
     <table className="table">
       <thead className="table__head">
         <tr className="table__head_row">
-          <th className="table__head_column" onClick={() => sort(SortFields.name)}>
+          <th className="table__head_column table__clickable" onClick={() => sort(SortFields.name)}>
             <Triangle down={sortBy.field === SortFields.name && sortBy.down}>
               <span>Name</span>
             </Triangle>
           </th>
-          <th className="table__head_column" onClick={() => sort(SortFields.coins)}>
+          <th className="table__head_column table__clickable" onClick={() => sort(SortFields.coins)}>
             <Triangle down={sortBy.field === SortFields.coins && sortBy.down}>
               <span>Coins</span>
             </Triangle>
           </th>
-          <th className="table__head_column table__hide_500" onClick={() => sort(SortFields.contributed)}>
+          <th
+            className="table__head_column table__hide_500 table__clickable"
+            onClick={() => sort(SortFields.contributed)}
+          >
             <Triangle down={sortBy.field === SortFields.contributed && sortBy.down}>
               <span>Contributed</span>
             </Triangle>
           </th>
-          <th className="table__head_column table__hide_400" onClick={() => sort(SortFields.cost)}>
+          <th className="table__head_column table__hide_400 table__clickable" onClick={() => sort(SortFields.cost)}>
             <Triangle down={sortBy.field === SortFields.cost && sortBy.down}>
               <span>Cost</span>
             </Triangle>
           </th>
-          <th className="table__head_column" onClick={() => sort(SortFields.profit)}>
+          <th className="table__head_column table__clickable" onClick={() => sort(SortFields.profit)}>
             <Triangle down={sortBy.field === SortFields.profit && sortBy.down}>
               <span className="table__hide_500">Profit</span>
             </Triangle>
@@ -240,10 +243,12 @@ export const PortfolioBody: FC = () => {
                   {profit > 0 ? `+${profit.toFixed(2)}` : profit.toFixed(2)}
                 </td>
                 <td>
-                  <Trash onClick={() => {
-                    localStorage.removeItem(key)
-                    setPortfolio(dispatch, assets)
-                  }}/>
+                  <Trash
+                    onClick={() => {
+                      localStorage.removeItem(key)
+                      setPortfolio(dispatch, assets)
+                    }}
+                  />
                 </td>
               </tr>
             )

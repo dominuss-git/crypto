@@ -34,27 +34,27 @@ export const Table: FC = () => {
       <table className="table">
         <thead className="table__head">
           <tr className="table__head_row">
-            <th onClick={() => sort(SortFields.rank)} className="table__head_column">
+            <th onClick={() => sort(SortFields.rank)} className="table__head_column table__clickable">
               <Triangle down={sortBy.field === SortFields.rank && sortBy.down}>
                 <span className="table__hide_500">Rank</span>
               </Triangle>
             </th>
-            <th onClick={() => sort(SortFields.coin)} className="table__head_column">
+            <th onClick={() => sort(SortFields.coin)} className="table__head_column table__clickable">
               <Triangle down={sortBy.field === SortFields.coin && sortBy.down}>
                 <span>Coin</span>
               </Triangle>
             </th>
-            <th onClick={() => sort(SortFields.vwap)} className="table__head_column table__hide_800">
+            <th onClick={() => sort(SortFields.vwap)} className="table__head_column table__hide_800 table__clickable">
               <Triangle down={sortBy.field === SortFields.vwap && sortBy.down}>
                 <span>VWAP (24Hr)</span>
               </Triangle>
             </th>
-            <th onClick={() => sort(SortFields.price)} className="table__head_column">
+            <th onClick={() => sort(SortFields.price)} className="table__head_column table__clickable">
               <Triangle down={sortBy.field === SortFields.price && sortBy.down}>
                 <span>Price</span>
               </Triangle>
             </th>
-            <th onClick={() => sort(SortFields.change)} className="table__head_column">
+            <th onClick={() => sort(SortFields.change)} className="table__head_column table__clickable">
               <Triangle down={sortBy.field === SortFields.change && sortBy.down}>
                 <span className="table__hide_500">Change (24Hr)</span>
               </Triangle>
@@ -88,7 +88,10 @@ export const Table: FC = () => {
             {page + 1}
           </span>
         )}
-        <span onClick={() => setPage(page + 1 > assets.length / 15 + 0.9 ? page : page + 1)} className="table__page-index">
+        <span
+          onClick={() => setPage(page + 1 > assets.length / 15 + 0.9 ? page : page + 1)}
+          className="table__page-index"
+        >
           {'>'}
         </span>
       </div>

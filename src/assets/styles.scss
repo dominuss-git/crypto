@@ -12,6 +12,12 @@ $secondary-main: #B58500;
   }
 }
 
+.trash {
+  :hover {
+    cursor: pointer;
+  }
+}
+
 .portfolio {
   display: inline-block;
   position: relative;
