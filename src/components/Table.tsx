@@ -72,23 +72,20 @@ export const Table: FC = () => {
         </thead>
         <tbody>
           {assets.slice(0 + 15 * (page - 1), 15 * page).map((val) => (
-            <>
-              <Cell key={val.symbol} asset={val} setVisible={setVisible} />
-              {isVisible === val.id && (
-                <Modal
-                  key={val.symbol}
-                  title="Add coin"
-                  onClose={() => {
-                    setVisible(null)
-                  }}
-                >
-                  <CoinCalculator setVisible={setVisible} id={val.id} />
-                </Modal>
-              )}
-            </>
+            <Cell key={val.symbol} asset={val} setVisible={setVisible} />
           ))}
         </tbody>
       </table>
+      {isVisible && (
+        <Modal
+          title="Add coin"
+          onClose={() => {
+            setVisible(null)
+          }}
+        >
+          <CoinCalculator setVisible={setVisible} id={isVisible as string} />
+        </Modal>
+      )}
       <div className="table__pagination">
         <span onClick={() => setPage(page - 1 < 1 ? page : page - 1)} className="table__page-index">
           {'<'}
