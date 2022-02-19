@@ -90,6 +90,16 @@ export const Table: FC = () => {
         <span onClick={() => setPage(page - 1 < 1 ? page : page - 1)} className="table__page-index">
           {'<'}
         </span>
+        {page !== 1 && page !== 2 && (
+          <>
+            <span className="table__page-index" onClick={() => setPage(1)}>
+              1
+            </span>
+            <span style={{ color: '#115740', fontSize: '25px' }}>
+            ...
+            </span>
+          </>
+        )}
         {page - 1 > 0 && (
           <span className="table__page-index" onClick={() => setPage(page - 1)}>
             {page - 1}
@@ -100,6 +110,16 @@ export const Table: FC = () => {
           <span className="table__page-index" onClick={() => setPage(page + 1)}>
             {page + 1}
           </span>
+        )}
+        {page !== Number((assets.length / 15).toFixed()) && page !== Number((assets.length / 15).toFixed()) - 1 && (
+          <>
+            <span className='table__spread'>
+            ...
+            </span>
+            <span className="table__page-index" onClick={() => setPage(Number((assets.length / 15).toFixed()))}>
+              {(assets.length / 15).toFixed()}
+            </span>
+          </>
         )}
         <span
           onClick={() => setPage(page + 1 > assets.length / 15 + 0.9 ? page : page + 1)}

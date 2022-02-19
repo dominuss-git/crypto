@@ -15,7 +15,7 @@ export const Modal: FC<ModalViewProps> = ({ children, title, onClose, ...rest })
         <div className="cross" onClick={onClose}>
           &times;
         </div>
-        {title ? <div className="modal__title">{title}</div> : null}
+        {title ? <h3 className="modal__title">{title}</h3> : null}
         {children ? <div className="modal__content">{children}</div> : null}
       </div>
     </div>

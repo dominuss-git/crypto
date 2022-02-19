@@ -5,11 +5,13 @@ import { Triangle } from '../assets/Triangle'
 import { Trash } from '../assets/Trash'
 import { TReducers } from '../redux/reducers'
 import { TAssetProps } from '../redux/reducers/assetsReducer'
-import { setPortfolio } from '../redux/actions/portfolioActions'
+import { setPortfolio, setSortedPortfolio } from '../redux/actions/portfolioActions'
 import { TPortfolioProps } from '../redux/reducers/portfolioReducer'
 import { TPortfolio } from '../redux/types'
 
 import './styles.scss'
+import { Modal } from './Modal'
+import { Button } from './Buttons'
 
 export enum SortFields {
   name,
@@ -24,6 +26,7 @@ export const PortfolioBody: FC = () => {
   const { portfolio } = useSelector<TReducers, TPortfolioProps>(({ portfolio }) => portfolio)
   const { assets } = useSelector<TReducers, TAssetProps>(({ assets }) => assets)
   const [sortBy, setSort] = useState<{ field: SortFields; down: boolean }>({ field: SortFields.name, down: false })
+  const [isVisible, setVisible] = useState<string | null>(null)
 
   const sort = (field: SortFields) => {
     if (field === sortBy.field) {
@@ -69,6 +72,9 @@ export const PortfolioBody: FC = () => {
           acc += Number(coin.valueCoins)
           return acc
         }, 0)
+
+        console.log(coinsA, typeof coinsA, coinsB, typeof coinsB, coinsA >= coinsB)
+
         if (coinsA >= coinsB) {
           return down ? 1 : -1
         } else {
@@ -166,48 +172,55 @@ export const PortfolioBody: FC = () => {
         }
       })
     }
-  }, [sortBy, assets, portfolio])
+
+    setSortedPortfolio(dispatch, portfolio)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortBy, assets])
+
+  if (portfolio.length === 0) {
+    return <h2 style={{ color: '#fff' }}>You don't have any coins</h2>
+  }
 
   return (
-    <table className="table">
-      <thead className="table__head">
-        <tr className="table__head_row">
-          <th className="table__head_column table__clickable" onClick={() => sort(SortFields.name)}>
-            <Triangle down={sortBy.field === SortFields.name && sortBy.down}>
-              <span>Name</span>
-            </Triangle>
-          </th>
-          <th className="table__head_column table__clickable" onClick={() => sort(SortFields.coins)}>
-            <Triangle down={sortBy.field === SortFields.coins && sortBy.down}>
-              <span>Coins</span>
-            </Triangle>
-          </th>
-          <th
-            className="table__head_column table__hide_500 table__clickable"
-            onClick={() => sort(SortFields.contributed)}
-          >
-            <Triangle down={sortBy.field === SortFields.contributed && sortBy.down}>
-              <span>Contributed</span>
-            </Triangle>
-          </th>
-          <th className="table__head_column table__hide_400 table__clickable" onClick={() => sort(SortFields.cost)}>
-            <Triangle down={sortBy.field === SortFields.cost && sortBy.down}>
-              <span>Cost</span>
-            </Triangle>
-          </th>
-          <th className="table__head_column table__clickable" onClick={() => sort(SortFields.profit)}>
-            <Triangle down={sortBy.field === SortFields.profit && sortBy.down}>
-              <span className="table__hide_500">Profit</span>
-            </Triangle>
-          </th>
-          <th className="table__head_column" onClick={() => sort(SortFields.profit)}>
-            <span>&times;</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody className="table__body">
-        {portfolio &&
-          portfolio.map((val) => {
+    <>
+      <table className="table">
+        <thead className="table__head">
+          <tr className="table__head_row">
+            <th className="table__head_column table__clickable" onClick={() => sort(SortFields.name)}>
+              <Triangle down={sortBy.field === SortFields.name && sortBy.down}>
+                <span>Name</span>
+              </Triangle>
+            </th>
+            <th className="table__head_column table__clickable" onClick={() => sort(SortFields.coins)}>
+              <Triangle down={sortBy.field === SortFields.coins && sortBy.down}>
+                <span>Coins</span>
+              </Triangle>
+            </th>
+            <th
+              className="table__head_column table__hide_500 table__clickable"
+              onClick={() => sort(SortFields.contributed)}
+            >
+              <Triangle down={sortBy.field === SortFields.contributed && sortBy.down}>
+                <span>Contributed</span>
+              </Triangle>
+            </th>
+            <th className="table__head_column table__hide_400 table__clickable" onClick={() => sort(SortFields.cost)}>
+              <Triangle down={sortBy.field === SortFields.cost && sortBy.down}>
+                <span>Cost</span>
+              </Triangle>
+            </th>
+            <th className="table__head_column table__clickable" onClick={() => sort(SortFields.profit)}>
+              <Triangle down={sortBy.field === SortFields.profit && sortBy.down}>
+                <span className="table__hide_500">Profit</span>
+              </Triangle>
+            </th>
+            <th className="table__head_column" onClick={() => sort(SortFields.profit)}>
+              <span>&times;</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody className="table__body">
+          {portfolio.map((val) => {
             console.log(val, portfolio)
             const key = Object.keys(val)[0]
             const coin = assets.find((val) => val.id === key)
@@ -225,7 +238,7 @@ export const PortfolioBody: FC = () => {
             const profit = (cost / contributed) * 100 - 100
 
             return (
-              <tr className="table__body_row-modal">
+              <tr key={key} className="table__body_row-modal">
                 <td className="table__body_column">
                   <div className="table__body_coin">
                     <img
@@ -245,15 +258,33 @@ export const PortfolioBody: FC = () => {
                 <td>
                   <Trash
                     onClick={() => {
-                      localStorage.removeItem(key)
-                      setPortfolio(dispatch, assets)
+                      setVisible(key)
                     }}
                   />
                 </td>
               </tr>
             )
           })}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+      {isVisible !== null && (
+        <Modal onClose={() => setVisible(null)} title="Delete this transaction">
+          <div style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
+            <Button
+              light
+              onClick={() => {
+                localStorage.removeItem(isVisible)
+                setPortfolio(dispatch, assets)
+              }}
+            >
+              Yes
+            </Button>
+            <Button onClick={() => setVisible(null)} secondary>
+              Close
+            </Button>
+          </div>
+        </Modal>
+      )}
+    </>
   )
 }

@@ -46,6 +46,13 @@ export const setPortfolio = (
   dispatch({ type: PortfolioActionsTypes.SET_PORTFOLIO, payload: { cost, raised, portfolio } })
 }
 
+export const setSortedPortfolio = (
+  dispatch: Dispatch<{ type: PortfolioActionsTypes; payload:{ [key: string]: TPortfolio[]; }[] }>,
+  portfolio: { [key: string]: TPortfolio[]; }[]
+) => {
+  dispatch({ type: PortfolioActionsTypes.SORT_PORTFOLIO, payload: portfolio })
+}
+
 // export const sortPortfolio = (
 //   dispatch: Dispatch<{ type: PortfolioActionsTypes; payload: { field: SortFields; down: boolean } }>,
 //   assets: TAsset[],

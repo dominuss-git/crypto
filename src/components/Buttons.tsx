@@ -5,13 +5,14 @@ import './styles.scss'
 export type TButtonProps = {
   onClick?: () => void
   light?: boolean
+  secondary?: boolean
 }
 
 export const Button: FC<TButtonProps & ButtonHTMLAttributes<any>> = (
-  { children, light, ...rest } = { light: false }
+  { children, light, secondary, ...rest } = { light: false }
 ) => {
   return (
-    <button className={light ? 'button__light' : 'button'} {...rest}>
+    <button className={light ? 'button__light' : secondary ? 'button__secondary' : 'button'} {...rest}>
       {children}
     </button>
   )

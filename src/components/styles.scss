@@ -99,6 +99,21 @@ $contrast: #fff;
     cursor: pointer;
   }
 
+  &__secondary {
+    display: inline-block;
+    background-color: $secondary-main;
+    border: none;
+    color: $contrast;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+  }
+
+  &__secondary:hover {
+    cursor: pointer;
+  }
+
   &__light {
     display: inline-block;
     background-color: $primary-light;
@@ -321,6 +336,11 @@ $contrast: #fff;
     &_active {
       background-color: $secondary-main;
     }
+  }
+
+  &__spread {
+    color: $primary-main;
+    font-size: 25px;
   }
 
   &__page-index:hover {

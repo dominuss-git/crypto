@@ -20,6 +20,8 @@ export const portfolioReducer = (state = InitialState, action: TPortfolioAction)
   switch (action.type) {
     case PortfolioActionsTypes.SET_PORTFOLIO:
       return { ...state, ...action.payload }
+    case PortfolioActionsTypes.SORT_PORTFOLIO: 
+      return { ...state, portfolio: action.payload }
     default:
       return state
   }
