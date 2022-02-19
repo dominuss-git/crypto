@@ -12,6 +12,7 @@ import { TPortfolio } from '../redux/types'
 import './styles.scss'
 import { Modal } from './Modal'
 import { Button } from './Buttons'
+import { Toggle } from './Toggle'
 
 export enum SortFields {
   name,
@@ -27,6 +28,7 @@ export const PortfolioBody: FC = () => {
   const { assets } = useSelector<TReducers, TAssetProps>(({ assets }) => assets)
   const [sortBy, setSort] = useState<{ field: SortFields; down: boolean }>({ field: SortFields.name, down: false })
   const [isVisible, setVisible] = useState<string | null>(null)
+  const [group, setGroup] = useState<boolean>(false)
 
   const sort = (field: SortFields) => {
     if (field === sortBy.field) {
@@ -54,9 +56,9 @@ export const PortfolioBody: FC = () => {
         }
 
         if (coinA?.symbol >= coinB?.symbol) {
-          return down ? -1 : 1
-        } else {
           return down ? 1 : -1
+        } else {
+          return down ? -1 : 1
         }
       })
     }
@@ -64,21 +66,20 @@ export const PortfolioBody: FC = () => {
       portfolio.sort((a, b) => {
         const keyA = Object.keys(a)[0]
         const keyB = Object.keys(b)[0]
-        const coinsA = a[keyA].reduce((acc: number, coin: TPortfolio) => {
+        const coinsA = a[keyA].valueCoins /*.reduce((acc: number, coin: TPortfolio) => {
           acc += Number(coin.valueCoins)
           return acc
-        }, 0)
-        const coinsB = b[keyB].reduce((acc: number, coin: TPortfolio) => {
+        }, 0) */
+        const coinsB = b[keyB].valueCoins /*.reduce((acc: number, coin: TPortfolio) => {
           acc += Number(coin.valueCoins)
           return acc
-        }, 0)
+        }, 0) */
 
-        console.log(coinsA, typeof coinsA, coinsB, typeof coinsB, coinsA >= coinsB)
 
         if (coinsA >= coinsB) {
-          return down ? 1 : -1
-        } else {
           return down ? -1 : 1
+        } else {
+          return down ? 1 : -1
         }
       })
     }
@@ -86,14 +87,14 @@ export const PortfolioBody: FC = () => {
       portfolio.sort((a, b) => {
         const keyA = Object.keys(a)[0]
         const keyB = Object.keys(b)[0]
-        const contributedA = a[keyA].reduce((acc: number, coin: TPortfolio) => {
+        const contributedA = a[keyA].valueUSD /*.reduce((acc: number, coin: TPortfolio) => {
           acc += Number(coin.valueUSD)
           return acc
-        }, 0)
-        const contributedB = b[keyB].reduce((acc: number, coin: TPortfolio) => {
+        }, 0) */
+        const contributedB = b[keyB].valueUSD /*.reduce((acc: number, coin: TPortfolio) => {
           acc += Number(coin.valueUSD)
           return acc
-        }, 0)
+        }, 0) */
         if (contributedA >= contributedB) {
           return down ? 1 : -1
         } else {
@@ -112,14 +113,14 @@ export const PortfolioBody: FC = () => {
           return 0
         }
 
-        const coinsA = a[keyA].reduce((acc: number, coin: TPortfolio) => {
+        const coinsA = a[keyA].valueCoins/*.reduce((acc: number, coin: TPortfolio) => {
           acc += Number(coin.valueCoins)
           return acc
-        }, 0)
-        const coinsB = b[keyB].reduce((acc: number, coin: TPortfolio) => {
+        }, 0) */
+        const coinsB = b[keyB].valueCoins/*.reduce((acc: number, coin: TPortfolio) => {
           acc += Number(coin.valueCoins)
           return acc
-        }, 0)
+        }, 0) */
 
         const costA = coinsA * Number(coinA?.priceUsd)
         const costB = coinsB * Number(coinB?.priceUsd)
@@ -142,22 +143,22 @@ export const PortfolioBody: FC = () => {
           return 0
         }
 
-        const coinsA = a[keyA].reduce((acc: number, coin: TPortfolio) => {
+        const coinsA = a[keyA].valueCoins/*.reduce((acc: number, coin: TPortfolio) => {
           acc += Number(coin.valueCoins)
           return acc
-        }, 0)
-        const coinsB = b[keyB].reduce((acc: number, coin: TPortfolio) => {
+        }, 0) */
+        const coinsB = b[keyB].valueCoins/*.reduce((acc: number, coin: TPortfolio) => {
           acc += Number(coin.valueCoins)
           return acc
-        }, 0)
-        const contributedA = a[keyA].reduce((acc: number, coin: TPortfolio) => {
+        }, 0) */
+        const contributedA = a[keyA].valueUSD /*.reduce((acc: number, coin: TPortfolio) => {
           acc += Number(coin.valueUSD)
           return acc
-        }, 0)
-        const contributedB = b[keyB].reduce((acc: number, coin: TPortfolio) => {
+        }, 0) */
+        const contributedB = b[keyB].valueUSD /*.reduce((acc: number, coin: TPortfolio) => {
           acc += Number(coin.valueUSD)
           return acc
-        }, 0)
+        }, 0) */
 
         const costA = coinsA * Number(coinA?.priceUsd)
         const costB = coinsB * Number(coinB?.priceUsd)
@@ -220,25 +221,24 @@ export const PortfolioBody: FC = () => {
           </tr>
         </thead>
         <tbody className="table__body">
-          {portfolio.map((val) => {
-            console.log(val, portfolio)
+          {portfolio.map((val, i) => {
             const key = Object.keys(val)[0]
             const coin = assets.find((val) => val.id === key)
-            const coins = val[key].reduce((acc: number, coin: TPortfolio) => {
+            const coins = val[key].valueCoins/*  val[key].reduce((acc: number, coin: TPortfolio) => {
               acc += Number(coin.valueCoins)
 
               return acc
-            }, 0)
-            const contributed = val[key].reduce((acc: number, coin: TPortfolio) => {
+            }, 0) */
+            const contributed = val[key].valueUSD/* val[key].reduce((acc: number, coin: TPortfolio) => {
               acc += Number(coin.valueUSD)
 
               return acc
-            }, 0)
+            }, 0)*/
             const cost = coins * Number(coin?.priceUsd)
             const profit = (cost / contributed) * 100 - 100
 
             return (
-              <tr key={key} className="table__body_row-modal">
+              <tr key={i} className="table__body_row-modal">
                 <td className="table__body_column">
                   <div className="table__body_coin">
                     <img

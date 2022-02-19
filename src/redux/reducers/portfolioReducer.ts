@@ -8,7 +8,7 @@ const InitialState = {
 }
 
 export type TPortfolioProps = {
-  portfolio: { [key: string]: TPortfolio[] }[]
+  portfolio: { [key: string]: TPortfolio }[]
   cost: number
   raised: number
 }

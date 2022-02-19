@@ -15,7 +15,7 @@ export const setPortfolio = (
   let cost = 0
   let change = 0
   let raised = 0
-  const portfolio = []
+  const portfolio: { [key: string]: TPortfolio }[] = []
 
   for (let i = 0; true; i++) {
     const key = localStorage.key(i)
@@ -24,14 +24,13 @@ export const setPortfolio = (
       break
     }
 
-    const data = JSON.parse(localStorage.getItem(key) as string)
-
-    portfolio.push({ [key]: data })
+    const data: TPortfolio[] = JSON.parse(localStorage.getItem(key) as string)
 
     const coin = assets.find((val) => val.id === key)
 
     // eslint-disable-next-line no-loop-func
     data.forEach((val: TPortfolio) => {
+      portfolio.push({ [key]: val })
       cost += Number(val.valueUSD)
       if (coin) {
         change += Number(val.valueCoins) * Number(coin.priceUsd)
@@ -47,8 +46,8 @@ export const setPortfolio = (
 }
 
 export const setSortedPortfolio = (
-  dispatch: Dispatch<{ type: PortfolioActionsTypes; payload:{ [key: string]: TPortfolio[]; }[] }>,
-  portfolio: { [key: string]: TPortfolio[]; }[]
+  dispatch: Dispatch<{ type: PortfolioActionsTypes; payload:{ [key: string]: TPortfolio; }[] }>,
+  portfolio: { [key: string]: TPortfolio; }[]
 ) => {
   dispatch({ type: PortfolioActionsTypes.SORT_PORTFOLIO, payload: portfolio })
 }
